@@ -1,0 +1,37 @@
+openapi: 3.0.2
+info:
+  version: 0.0.1
+  title: Template
+tags:
+  - name: file
+    description: ""
+paths:
+  /ping:
+    get:
+      responses:
+        "200":
+          description: "service is active"
+          content:
+            application/json:
+              schema:
+                type: object
+
+        "400":
+          description: ""
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Error"
+components:
+  schemas:
+    Error:
+      type: object
+      required: [error_message, code]
+      properties:
+        error_message:
+          type: string
+        code:
+          type: number
+    # UnauthorizedError:
+    #     description: Access token is missing or invalid
+    #     type: object

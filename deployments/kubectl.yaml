@@ -1,0 +1,45 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: go-template
+  labels:
+    app: template
+spec:
+  selector:
+    matchLabels:
+      app: template
+  template:
+    metadata:
+      labels:
+        app: template
+    spec:
+      containers:
+        - name: template
+          image: localhost:32000/template:latest
+          imagePullPolicy: Always
+          ports:
+            - containerPort: 80
+          startupProbe:
+            httpGet:
+              port: 80
+              path: /template/api/ping
+            failureThreshold: 6
+            periodSeconds: 10
+          env:
+            - name: TZ
+              value: Asia/Yakutsk
+
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: template-service
+spec:
+  selector:
+    app: template
+  type: LoadBalancer
+  ports:
+    - protocol: TCP
+      port: 80
+      targetPort: 80
+      nodePort: 30010
