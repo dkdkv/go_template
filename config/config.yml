@@ -1,0 +1,2 @@
+db:
+  ivalue: postgres://username:password@localhost:port/database?sslmode=disable
